@@ -9,11 +9,11 @@ Account$init <- function() self$balance <- 0
 # vs 
 
 Account <- Object$clone()$do({
-  balance <- 0.0
-  deposit <- function(v) self$balance <- self$balance + v
-  withdraw <- function(v) self$balance <- self$balance - v
-  show <- function() cat("Account balance: $", self$balance, "\n")
-  init <- function() self$balance <- 0
+  self$balance <- 0.0
+  self$deposit <- function(v) self$balance <- self$balance + v
+  self$withdraw <- function(v) self$balance <- self$balance - v
+  self$show <- function() cat("Account balance: $", self$balance, "\n")
+  self$init <- function() self$balance <- 0
 })
 
 cat("Inital: ")
