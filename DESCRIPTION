@@ -7,6 +7,7 @@ Maintainer: Hadley Wickham <h.wickham@gmail.com>
 Description: Mutable prototype based objects with multiple inheritance.
 URL: http://had.co.nz/
 Imports: digest
+Suggests: testthat (>= 0.7)
 License: GPL
 LazyData: true
 Collate: 'ancestors.r' 'core.r' 'object.r' 'object-inheritance.r'
