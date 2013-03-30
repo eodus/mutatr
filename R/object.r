@@ -5,7 +5,7 @@ NULL
 core <- function(x) x[[1]]
 
 #' Core mutatr object
-#' 
+#'
 #' @aliases Object $.mutatr $<-.mutatr format.mutatr print.mutatr
 #' @S3method format mutatr
 #' @S3method print mutatr
@@ -19,7 +19,7 @@ core(Object)$set_slot("set_slot", function(name, value) {
 })
 
 #' Add object scope to a function
-#' 
+#'
 #' @param res object to add object scope to (does nothing if not a function)
 #' @param self self object
 #' @keywords internal
@@ -56,14 +56,14 @@ Object$do <- function(expr) {
 
 Object$do({
   self$.name <- "Object"
-  
+
   self$do_string <- function(text) {
     env <- new.env(parent = parent.frame())
     env$self <- self
     eval(parse(text = text), env)
     self
   }
-  
+
   #' @param chdir change working directory when evaluating code in file?
   self$do_file <- function(path, chdir = TRUE) {
     env <- new.env(parent = parent.frame())
@@ -71,40 +71,40 @@ Object$do({
     sys.source(path, env, chdir = chdir)
     self
   }
-  
+
   self$remove_slot <- function(name) {
     core(self)$remove_slot(name)
   }
-  
+
   self$slot_names <- function() {
     core(self)$slot_names()
   }
-  
+
   self$has_local_slot <- function(name) {
     core(self)$has_local_slot(name)
   }
   self$get_local_slot <- function(name) {
     core(self)$get_local_slot(name)
   }
-  
+
   self$update_slot <- function(name, value) {
     if (!self$has_slot(name)) {
       stop("Slot does not exist")
     }
     self$set_slot(name, value)
   }
-  
+
   self$slot_summary <- function() {
     names <- setdiff(self$slot_names(), c("name", "protos"))
     descriptions <- unlist(lapply(names, self$slot_desc))
     descriptions <- gsub("^ +| +$", "", descriptions)
-    
+
     out <- cbind(Name = names, Description = descriptions)
     out <- out[order(out[, 1]), ]
     rownames(out) <- rep("", nrow(out))
     noquote(out)
   }
-  
+
   self$slot_desc <- function(name) {
     capture.output(str(self$get_local_slot(name), max.level = 1, give.attr=F))
   }
@@ -112,7 +112,7 @@ Object$do({
   self$as_string <- function(...) {
     paste(self$.name, " <", envname(core(self)[[1]]), ">", sep = "")
   }
-  
+
   self$format <- function(...) {
     self$as_string(...)
   }
